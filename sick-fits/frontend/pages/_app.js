@@ -22,9 +22,11 @@ function MyApp({ Component, pageProps, apollo }) {
 
 MyApp.getInitialProps = async function ({ Component, ctx }) {
   let pageProps = {};
+  // If Apollo "withData" is working and component has getInitialProps method...)
   if (Component.getInitialProps) {
     pageProps = await Component.getInitialProps(ctx);
   }
+  // get query variables available at a page level
   pageProps.query = ctx.query;
   return { pageProps };
 };
