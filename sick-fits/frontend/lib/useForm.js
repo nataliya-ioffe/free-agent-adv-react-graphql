@@ -1,4 +1,3 @@
-import { number } from 'prop-types';
 import { useState } from 'react';
 
 export default function useForm(initial = {}) {
@@ -13,7 +12,8 @@ export default function useForm(initial = {}) {
     }
 
     if (type === 'file') {
-      value[0] = e.target.files;
+      // get me first thing out of the array
+      [value] = e.target.files;
     }
 
     setInputs({
