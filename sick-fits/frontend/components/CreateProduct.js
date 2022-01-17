@@ -1,8 +1,10 @@
 import { useMutation } from '@apollo/client';
 import gql from 'graphql-tag';
-import useForm from '../lib/useForm';
-import Form from './styles/Form';
+import Router from 'next/router';
 import DisplayError from './DisplayError';
+import Form from './styles/Form';
+import { ALL_PRODUCTS_QUERY } from './Products';
+import useForm from '../lib/useForm';
 
 const CREATE_PRODUCT_MUTATION = gql`
   mutation CREATE_PRODUCT_MUTATION(
@@ -38,6 +40,8 @@ export default function CreateProduct() {
     CREATE_PRODUCT_MUTATION,
     {
       variables: inputs,
+      //   refetch data from network so new mutation shows up immediately on the front end
+      refetchQueries: [{ query: ALL_PRODUCTS_QUERY }],
     }
   );
 
@@ -47,8 +51,13 @@ export default function CreateProduct() {
         e.preventDefault();
 
         // Submit the input fields to the backend via GraphQL:
-        await createProduct();
+        const response = await createProduct();
         clearForm();
+        // After submitting form sucessfully, go to newly created product page using product/id as slug
+        // Next.js will use [id].js template in Pages to create this slug
+        Router.push({
+          pathname: `/product/${response.data.createProduct.id}`,
+        });
       }}
     >
       {/* The error component returns null if no error */}
