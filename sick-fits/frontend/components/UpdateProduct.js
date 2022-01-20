@@ -69,15 +69,6 @@ export default function UpdateProduct({ id }) {
             price: inputs.price,
           },
         });
-        // TODO: handle submit
-        //     // Submit the input fields to the backend via GraphQL:
-        //     const response = await createProduct();
-        //     clearForm();
-        //     // After submitting form sucessfully, go to newly created product page using product/id as slug
-        //     // Next.js will use [id].js template in Pages to create this slug
-        //     Router.push({
-        //       pathname: `/product/${response.data.createProduct.id}`,
-        //     });
       }}
     >
       <DisplayError error={error || updateError} />
