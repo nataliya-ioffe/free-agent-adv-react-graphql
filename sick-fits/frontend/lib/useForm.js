@@ -6,8 +6,6 @@ export default function useForm(initial = {}) {
 
   const initialValues = Object.values(initial).join('');
 
-  console.log(initialValues);
-
   useEffect(() => {
     // useEffect callback runs when the things we are watching change
     setInputs(initial);

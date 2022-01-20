@@ -7,7 +7,7 @@ import PaginationStyles from './styles/PaginationStyles';
 
 import { perPage } from '../config';
 
-// _allProductsMeta is a Keystone query
+// _allProductsMeta is a Keystone query to get the total number of items
 export const PAGINATION_QUERY = gql`
   query {
     _allProductsMeta {
