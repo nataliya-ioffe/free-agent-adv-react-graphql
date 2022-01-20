@@ -6,6 +6,7 @@ import {
   withItemData,
   statelessSessions,
 } from '@keystone-next/keystone/session';
+import { sendPasswordResetEmail } from './lib/mail';
 import { User } from './schemas/User';
 import { Product } from './schemas/Product';
 import { ProductImage } from './schemas/ProductImage';
@@ -26,6 +27,14 @@ const { withAuth } = createAuth({
   initFirstItem: {
     fields: ['name', 'email', 'password'],
     //   TODO: Add in initial roles here
+  },
+  passwordResetLink: {
+    // When password rest is requested by user, 
+    // send a password reset email to user...
+    // User will receive link with reset token in the URL
+    async sendToken(args) {
+      await sendPasswordResetEmail(args.token, args.identity);
+    },
   },
 });
 
