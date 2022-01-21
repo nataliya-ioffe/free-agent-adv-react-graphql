@@ -11,6 +11,7 @@ import { User } from './schemas/User';
 import { Product } from './schemas/Product';
 import { ProductImage } from './schemas/ProductImage';
 import { insertSeedData } from './seed-data';
+import { CartItem } from './schemas/CartItem';
 
 const databaseURL =
   process.env.DATABASE_URL || 'mongodb://localhost/keystone-sick-fits-tutorial';
@@ -62,6 +63,7 @@ export default withAuth(
       User,
       Product,
       ProductImage,
+      CartItem
     }),
     ui: {
       // Show UI to users who pass this test

@@ -13,7 +13,21 @@ export const CURRENT_USER_QUERY = gql`
         id
         email
         name
-        # TODO: query the cart once we have it
+        cart {
+          id
+          quantity
+          product {
+            id
+            name
+            price
+            description
+            photo {
+              image {
+                publicUrlTransformed
+              }
+            }
+          }
+        }
       }
     }
   }
