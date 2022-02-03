@@ -24,20 +24,23 @@ function CartItem({ cartItem }) {
 
   if (!product) return null;
 
+  const itemQuantityTotal = formatMoney(product.price * cartItem.quantity);
+  const itemPrice = formatMoney(product.price);
+
   return (
     <CartItemStyles>
       <img
         width="100"
-        src={product.photo.publicUrlTransformed}
+        src={product.photo.image.publicUrlTransformed}
         alt={product.name}
       />
       <div>
         <h3>{product.name}</h3>
         <p>
-          {formatMoney(product.price * cartItem.quantity)}
+          {itemQuantityTotal}
           <em>
             {' '}
-            ({cartItem.quantity} &times; {formatMoney(product.price)} each)
+            ({cartItem.quantity} &times; ${itemPrice} each)
           </em>
         </p>
       </div>
@@ -47,6 +50,7 @@ function CartItem({ cartItem }) {
 
 export default function Cart() {
   const user = useUser();
+  const totalCartPrice = formatMoney(calcTotalPrice(user.cart));
 
   if (!user) return null;
 
@@ -61,7 +65,7 @@ export default function Cart() {
         ))}
       </ul>
       <footer>
-        <p>{formatMoney(calcTotalPrice(user.cart))}</p>
+        <p>{totalCartPrice}</p>
       </footer>
     </CartStyles>
   );
