@@ -12,6 +12,7 @@ import { Product } from './schemas/Product';
 import { ProductImage } from './schemas/ProductImage';
 import { insertSeedData } from './seed-data';
 import { CartItem } from './schemas/CartItem';
+import { extendGraphqlSchema } from './mutations';
 
 const databaseURL =
   process.env.DATABASE_URL || 'mongodb://localhost/keystone-sick-fits-tutorial';
@@ -41,6 +42,7 @@ const { withAuth } = createAuth({
 
 export default withAuth(
   config({
+    // @ts-ignore
     server: {
       cors: {
         origin: [process.env.FRONTEND_URL],
@@ -65,13 +67,14 @@ export default withAuth(
       ProductImage,
       CartItem
     }),
+    extendGraphqlSchema,
     ui: {
       // Show UI to users who pass this test
       isAccessAllowed: ({ session }) => !!session?.data,
     },
     session: withItemData(statelessSessions(sessionConfig), {
       // GraphQL Query
-      User: 'id',
+      User: 'id name email',
     }),
   })
 );
