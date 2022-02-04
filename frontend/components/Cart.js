@@ -2,15 +2,16 @@ import styled from 'styled-components';
 import CartStyles from './styles/CartStyles';
 import CloseButton from './styles/CloseButton';
 import Supreme from './styles/Supreme';
-import formatMoney from '../lib/formatMoney.js';
+import formatMoney from '../lib/formatMoney';
 import { useUser } from './User';
 import calcTotalPrice from '../lib/calcTotalPrice';
 import { useCart } from '../lib/cartState';
+import RemoveFromCart from './RemoveFromCart';
 
 const CartItemStyles = styled.li`
   padding: 1rem 0;
   border-bottom: 1px solid var(--lightGray);
-  grid: grid;
+  display: grid;
   grid-template-columns: auto 1fr auto;
   img {
     margin-right: 1rem;
@@ -46,13 +47,13 @@ function CartItem({ cartItem }) {
           </em>
         </p>
       </div>
+      <RemoveFromCart id={cartItem.id} />
     </CartItemStyles>
   );
 }
 
 export default function Cart() {
   const user = useUser();
-  // const data = useCart();
   const { cartOpen, closeCart } = useCart();
 
   if (!user) return null;
@@ -61,9 +62,9 @@ export default function Cart() {
 
   return (
     <CartStyles open={cartOpen}>
-      <CloseButton onClick={closeCart}>&times;</CloseButton>
       <header>
-        <Supreme> {user.name}'s Cat</Supreme>
+        <Supreme>{user.name}'s Cart</Supreme>
+        <CloseButton onClick={closeCart}>&times;</CloseButton>
       </header>
       <ul>
         {user.cart.map((cartItem) => (
